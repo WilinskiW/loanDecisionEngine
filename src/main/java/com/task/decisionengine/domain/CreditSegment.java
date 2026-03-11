@@ -1,0 +1,17 @@
+package com.task.decisionengine.domain;
+
+import lombok.Getter;
+
+@Getter
+enum CreditSegment {
+    DEBT(-1),
+    SEGMENT_1(100),
+    SEGMENT_2(300),
+    SEGMENT_3(1000);
+
+    private final double creditModifier;
+
+    CreditSegment(double creditModifier) {
+        this.creditModifier = creditModifier;
+    }
+}
