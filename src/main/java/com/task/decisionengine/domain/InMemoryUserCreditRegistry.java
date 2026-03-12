@@ -3,7 +3,7 @@ package com.task.decisionengine.domain;
 import java.util.HashMap;
 import java.util.Map;
 
-class MockUserRegistry implements UserProfileRegistry {
+class InMemoryUserCreditRegistry implements UserCreditRegistry {
     private static final Map<String, CreditSegment> DEFAULT_REGISTRY = Map.of(
             "49002010965", CreditSegment.DEBT,
             "49002010976", CreditSegment.SEGMENT_1,
@@ -13,17 +13,17 @@ class MockUserRegistry implements UserProfileRegistry {
 
     private final Map<String, CreditSegment> registry;
 
-    MockUserRegistry() {
+    InMemoryUserCreditRegistry() {
         this.registry = new HashMap<>(DEFAULT_REGISTRY);
     }
 
-    MockUserRegistry(Map<String, CreditSegment> extraData) {
+    InMemoryUserCreditRegistry(Map<String, CreditSegment> extraData) {
         this();
         this.registry.putAll(extraData);
     }
 
     @Override
-    public int findUserCreditModifierByPersonalCode(String personalCode) {
+    public int findCreditModifier(String personalCode) {
         return registry.getOrDefault(personalCode, CreditSegment.DEBT).getCreditModifier();
     }
 }

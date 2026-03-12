@@ -3,7 +3,7 @@ package com.task.decisionengine.domain;
 import lombok.Builder;
 
 @Builder
-public record UserLoanInfoToReviewDto(
+public record LoanRequest(
         String personalCode,
         double amount,
         int period

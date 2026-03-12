@@ -1,8 +1,5 @@
 package com.task.decisionengine.domain;
 
-import lombok.Getter;
-
-@Getter
 enum CreditSegment {
     DEBT(0),
     SEGMENT_1(100),
@@ -15,5 +12,9 @@ enum CreditSegment {
 
     CreditSegment(int creditModifier) {
         this.creditModifier = creditModifier;
+    }
+
+    int getCreditModifier() {
+        return creditModifier;
     }
 }

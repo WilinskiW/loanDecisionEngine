@@ -1,6 +1,6 @@
 package com.task.decisionengine.domain;
 
-enum DecisionEngineOutcome {
+enum DecisionOutcome {
     POSITIVE,
     NEGATIVE
 }
