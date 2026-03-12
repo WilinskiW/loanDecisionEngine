@@ -5,7 +5,7 @@ import lombok.Builder;
 @Builder
 public record LoanRequest(
         String personalCode,
-        double amount,
+        int amount,
         int period
 ) {
 }
