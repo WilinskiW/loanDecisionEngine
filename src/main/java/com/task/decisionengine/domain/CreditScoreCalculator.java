@@ -3,8 +3,8 @@ package com.task.decisionengine.domain;
 class CreditScoreCalculator {
     private final UserProfileRegistry userProfileRegistry;
 
-    CreditScoreCalculator() {
-        this.userProfileRegistry = new MockUserRegistry();
+    CreditScoreCalculator(UserProfileRegistry userProfileRegistry) {
+        this.userProfileRegistry = userProfileRegistry;
     }
 
     LoanDecisionReportDto calculate(UserLoanInfoToReviewDto loanInfo) {
