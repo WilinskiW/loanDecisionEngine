@@ -1,22 +1,25 @@
 package com.task.decisionengine.domain;
 
 class CreditScoreCalculator {
-    private final UserProfileRegistry userProfileRegistry = new MockUserRegistry();
+    private final UserProfileRegistry userProfileRegistry;
 
-    LoanDecisionReportDto calculate(UserLoanInfoToReviewDto loanInfo){
-        double creditModifier = userProfileRegistry.findUserCreditModifierByPersonalCode(loanInfo.personalCode());
-        double creditScore = (creditModifier / loanInfo.loanAmount()) * loanInfo.loanPeriod();
+    CreditScoreCalculator() {
+        this.userProfileRegistry = new MockUserRegistry();
+    }
 
-        if(creditScore < 1){
+    LoanDecisionReportDto calculate(UserLoanInfoToReviewDto loanInfo) {
+        int creditModifier = userProfileRegistry.findUserCreditModifierByPersonalCode(loanInfo.personalCode());
+        int maxAmount = creditModifier * loanInfo.period();
+
+        if (maxAmount >= LoanValidator.MIN_LOAN_AMOUNT) {
             return LoanDecisionReportDto.builder()
-                    .outcome(DecisionEngineOutcome.NEGATIVE)
-                    .amount(0)
+                    .outcome(DecisionEngineOutcome.POSITIVE)
+                    .amount(Math.min(maxAmount, LoanValidator.MAX_LOAN_AMOUNT))
                     .build();
         }
 
-        return LoanDecisionReportDto.builder()
-                .outcome(DecisionEngineOutcome.POSITIVE)
-                .amount(creditScore)
-                .build();
+        //todo
+        int newPeriod = LoanValidator.MIN_LOAN_AMOUNT / creditModifier;
+        return new LoanDecisionReportDto(DecisionEngineOutcome.NEGATIVE, 0);
     }
 }

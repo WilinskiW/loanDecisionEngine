@@ -7,7 +7,7 @@ public class LoanDecisionEngineFacade {
     private CreditScoreCalculator calculator;
 
     public LoanDecisionReportDto decideLoanAmount(UserLoanInfoToReviewDto loanInfo) {
-        LoanValidator.validateLoanConstraints(loanInfo.loanAmount(), loanInfo.loanPeriod());
+        LoanValidator.validateLoanConstraints(loanInfo.amount(), loanInfo.period());
         return calculator.calculate(loanInfo);
     }
 }

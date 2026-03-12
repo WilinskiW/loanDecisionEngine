@@ -9,9 +9,9 @@ enum CreditSegment {
     SEGMENT_2(300),
     SEGMENT_3(1000);
 
-    private final double creditModifier;
+    private final int creditModifier;
 
-    CreditSegment(double creditModifier) {
+    CreditSegment(int creditModifier) {
         this.creditModifier = creditModifier;
     }
 }

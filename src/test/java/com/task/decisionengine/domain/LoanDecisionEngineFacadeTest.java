@@ -13,8 +13,8 @@ class LoanDecisionEngineFacadeTest {
         LoanDecisionEngineFacade loanDecisionEngineFacade = new LoanDecisionEngineFacade(new CreditScoreCalculator());
         UserLoanInfoToReviewDto loanInfoToReviewDto = UserLoanInfoToReviewDto.builder()
                 .personalCode("49002010965")
-                .loanAmount(300)
-                .loanPeriod(10)
+                .amount(300)
+                .period(10)
                 .build();
         //when & then
         assertThatThrownBy(() -> loanDecisionEngineFacade.decideLoanAmount(loanInfoToReviewDto))
@@ -28,8 +28,8 @@ class LoanDecisionEngineFacadeTest {
         LoanDecisionEngineFacade loanDecisionEngineFacade = new LoanDecisionEngineFacade(new CreditScoreCalculator());
         UserLoanInfoToReviewDto loanInfoToReviewDto = UserLoanInfoToReviewDto.builder()
                 .personalCode("49002010965")
-                .loanAmount(10001)
-                .loanPeriod(30)
+                .amount(10001)
+                .period(30)
                 .build();
         //when & then
         assertThatThrownBy(() -> loanDecisionEngineFacade.decideLoanAmount(loanInfoToReviewDto))
@@ -43,8 +43,8 @@ class LoanDecisionEngineFacadeTest {
         LoanDecisionEngineFacade loanDecisionEngineFacade = new LoanDecisionEngineFacade(new CreditScoreCalculator());
         UserLoanInfoToReviewDto loanInfoToReviewDto = UserLoanInfoToReviewDto.builder()
                 .personalCode("49002010965")
-                .loanAmount(2500)
-                .loanPeriod(11)
+                .amount(2500)
+                .period(11)
                 .build();
         //when & then
         assertThatThrownBy(() -> loanDecisionEngineFacade.decideLoanAmount(loanInfoToReviewDto))
@@ -58,8 +58,8 @@ class LoanDecisionEngineFacadeTest {
         LoanDecisionEngineFacade loanDecisionEngineFacade = new LoanDecisionEngineFacade(new CreditScoreCalculator());
         UserLoanInfoToReviewDto loanInfoToReviewDto = UserLoanInfoToReviewDto.builder()
                 .personalCode("49002010965")
-                .loanAmount(2500)
-                .loanPeriod(61)
+                .amount(2500)
+                .period(61)
                 .build();
         //when & then
         assertThatThrownBy(() -> loanDecisionEngineFacade.decideLoanAmount(loanInfoToReviewDto))
@@ -73,13 +73,29 @@ class LoanDecisionEngineFacadeTest {
         LoanDecisionEngineFacade loanDecisionEngineFacade = new LoanDecisionEngineFacade(new CreditScoreCalculator());
         UserLoanInfoToReviewDto loanInfoToReviewDto = UserLoanInfoToReviewDto.builder()
                 .personalCode("49002010965")
-                .loanAmount(2500)
-                .loanPeriod(30)
+                .amount(2500)
+                .period(30)
                 .build();
         //when
         LoanDecisionReportDto decisionReportDto = loanDecisionEngineFacade.decideLoanAmount(loanInfoToReviewDto);
         //then
         assertThat(decisionReportDto.outcome()).isEqualTo(DecisionEngineOutcome.NEGATIVE);
         assertThat(decisionReportDto.amount()).isEqualTo(0);
+    }
+
+    @Test
+    public void should_accept_user_loan_and_give_maximum_amount_within_constraints_range(){
+        //given
+        LoanDecisionEngineFacade loanDecisionEngineFacade = new LoanDecisionEngineFacade(new CreditScoreCalculator());
+        UserLoanInfoToReviewDto loanInfoToReviewDto = UserLoanInfoToReviewDto.builder()
+                .personalCode("49002010998")
+                .amount(4000)
+                .period(15)
+                .build();
+        //when
+        LoanDecisionReportDto decisionReportDto = loanDecisionEngineFacade.decideLoanAmount(loanInfoToReviewDto);
+        //then
+        assertThat(decisionReportDto.outcome()).isEqualTo(DecisionEngineOutcome.POSITIVE);
+        assertThat(decisionReportDto.amount()).isEqualTo(10_000);
     }
 }

@@ -15,7 +15,7 @@ class MockUserRegistry implements UserProfileRegistry {
     }
 
     @Override
-    public double findUserCreditModifierByPersonalCode(String personalCode) {
+    public int findUserCreditModifierByPersonalCode(String personalCode) {
         return registry.getOrDefault(personalCode, CreditSegment.DEBT).getCreditModifier();
     }
 }
