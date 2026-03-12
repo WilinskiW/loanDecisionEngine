@@ -5,6 +5,7 @@ import lombok.Builder;
 @Builder
 public record LoanDecisionReportDto(
         DecisionEngineOutcome outcome,
-        int amount
+        int amount,
+        int period
 ) {
 }

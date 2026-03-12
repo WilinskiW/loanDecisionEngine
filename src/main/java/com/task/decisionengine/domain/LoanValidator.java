@@ -1,6 +1,6 @@
 package com.task.decisionengine.domain;
 
-public class LoanValidator {
+class LoanValidator {
     static final int MIN_LOAN_AMOUNT = 2000;
     static final int MAX_LOAN_AMOUNT = 10_000;
     static final int MIN_LOAN_PERIOD = 12;

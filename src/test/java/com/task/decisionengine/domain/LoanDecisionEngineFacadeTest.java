@@ -84,7 +84,7 @@ class LoanDecisionEngineFacadeTest {
     }
 
     @Test
-    public void should_accept_user_loan_and_give_maximum_amount_within_constraints_range(){
+    public void should_accept_user_loan_and_give_maximum_10000_when_it_exceed_the_maximum_amount(){
         //given
         LoanDecisionEngineFacade loanDecisionEngineFacade = new LoanDecisionEngineFacade(new CreditScoreCalculator());
         UserLoanInfoToReviewDto loanInfoToReviewDto = UserLoanInfoToReviewDto.builder()
@@ -98,4 +98,39 @@ class LoanDecisionEngineFacadeTest {
         assertThat(decisionReportDto.outcome()).isEqualTo(DecisionEngineOutcome.POSITIVE);
         assertThat(decisionReportDto.amount()).isEqualTo(10_000);
     }
+
+    @Test
+    public void should_extend_loan_period_when_user_want_loan_for_too_short_time_period(){
+        //given
+        LoanDecisionEngineFacade loanDecisionEngineFacade = new LoanDecisionEngineFacade(new CreditScoreCalculator());
+        UserLoanInfoToReviewDto loanInfoToReviewDto = UserLoanInfoToReviewDto.builder()
+                .personalCode("49002010976")
+                .amount(2000)
+                .period(12)
+                .build();
+        //when
+        LoanDecisionReportDto decisionReportDto = loanDecisionEngineFacade.decideLoanAmount(loanInfoToReviewDto);
+        //then
+        assertThat(decisionReportDto.outcome()).isEqualTo(DecisionEngineOutcome.POSITIVE);
+        assertThat(decisionReportDto.amount()).isEqualTo(2000);
+        assertThat(decisionReportDto.period()).isEqualTo(20);
+    }
+
+    @Test
+    public void should_increase_amount_and_keep_period_when_credit_modifier_is_low(){
+        //given
+        LoanDecisionEngineFacade loanDecisionEngineFacade = new LoanDecisionEngineFacade(new CreditScoreCalculator());
+        UserLoanInfoToReviewDto loanInfoToReviewDto = UserLoanInfoToReviewDto.builder()
+                .personalCode("49002010976")
+                .amount(2000)
+                .period(55)
+                .build();
+        //when
+        LoanDecisionReportDto decisionReportDto = loanDecisionEngineFacade.decideLoanAmount(loanInfoToReviewDto);
+        //then
+        assertThat(decisionReportDto.outcome()).isEqualTo(DecisionEngineOutcome.POSITIVE);
+        assertThat(decisionReportDto.amount()).isEqualTo(5500);
+        assertThat(decisionReportDto.period()).isEqualTo(55);
+    }
+
 }
