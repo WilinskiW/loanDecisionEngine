@@ -3,6 +3,8 @@ package com.task.decisionengine.domain;
 import com.task.decisionengine.infrastructure.InMemoryUserCreditRegistry;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -14,7 +16,7 @@ class LoanDecisionEngineTest {
         LoanDecisionEngine loanDecisionEngine = new LoanDecisionEngine(new InMemoryUserCreditRegistry());
         LoanRequest loanInfoToReviewDto = LoanRequest.builder()
                 .personalCode("49002010965")
-                .amount(300)
+                .amount(new BigDecimal("300"))
                 .period(10)
                 .build();
         //when & then
@@ -29,7 +31,7 @@ class LoanDecisionEngineTest {
         LoanDecisionEngine loanDecisionEngine = new LoanDecisionEngine(new InMemoryUserCreditRegistry());
         LoanRequest loanInfoToReviewDto = LoanRequest.builder()
                 .personalCode("49002010965")
-                .amount(10001)
+                .amount(new BigDecimal("10001"))
                 .period(30)
                 .build();
         //when & then
@@ -44,7 +46,7 @@ class LoanDecisionEngineTest {
         LoanDecisionEngine loanDecisionEngine = new LoanDecisionEngine(new InMemoryUserCreditRegistry());
         LoanRequest loanInfoToReviewDto = LoanRequest.builder()
                 .personalCode("49002010965")
-                .amount(2500)
+                .amount(new BigDecimal("2500"))
                 .period(11)
                 .build();
         //when & then
@@ -59,7 +61,7 @@ class LoanDecisionEngineTest {
         LoanDecisionEngine loanDecisionEngine = new LoanDecisionEngine(new InMemoryUserCreditRegistry());
         LoanRequest loanInfoToReviewDto = LoanRequest.builder()
                 .personalCode("49002010965")
-                .amount(2500)
+                .amount(new BigDecimal("2500"))
                 .period(61)
                 .build();
         //when & then
@@ -74,14 +76,14 @@ class LoanDecisionEngineTest {
         LoanDecisionEngine loanDecisionEngine = new LoanDecisionEngine(new InMemoryUserCreditRegistry());
         LoanRequest loanInfoToReviewDto = LoanRequest.builder()
                 .personalCode("49002010965")
-                .amount(2500)
+                .amount(new BigDecimal("2500"))
                 .period(30)
                 .build();
         //when
         LoanOffer decisionReportDto = loanDecisionEngine.decide(loanInfoToReviewDto);
         //then
         assertThat(decisionReportDto.outcome()).isEqualTo(DecisionOutcome.NEGATIVE);
-        assertThat(decisionReportDto.amount()).isEqualTo(0);
+        assertThat(decisionReportDto.amount()).isEqualTo(BigDecimal.ZERO);
     }
 
     @Test
@@ -90,14 +92,14 @@ class LoanDecisionEngineTest {
         LoanDecisionEngine loanDecisionEngine = new LoanDecisionEngine(new InMemoryUserCreditRegistry());
         LoanRequest loanInfoToReviewDto = LoanRequest.builder()
                 .personalCode("49002010998")
-                .amount(4000)
+                .amount(new BigDecimal("4000"))
                 .period(15)
                 .build();
         //when
         LoanOffer decisionReportDto = loanDecisionEngine.decide(loanInfoToReviewDto);
         //then
         assertThat(decisionReportDto.outcome()).isEqualTo(DecisionOutcome.POSITIVE);
-        assertThat(decisionReportDto.amount()).isEqualTo(10_000);
+        assertThat(decisionReportDto.amount()).isEqualTo(BigDecimal.valueOf(10000));
     }
 
     @Test
@@ -106,14 +108,14 @@ class LoanDecisionEngineTest {
         LoanDecisionEngine loanDecisionEngine = new LoanDecisionEngine(new InMemoryUserCreditRegistry());
         LoanRequest loanInfoToReviewDto = LoanRequest.builder()
                 .personalCode("49002010976")
-                .amount(2000)
+                .amount(new BigDecimal("2000"))
                 .period(12)
                 .build();
         //when
         LoanOffer decisionReportDto = loanDecisionEngine.decide(loanInfoToReviewDto);
         //then
         assertThat(decisionReportDto.outcome()).isEqualTo(DecisionOutcome.POSITIVE);
-        assertThat(decisionReportDto.amount()).isEqualTo(2000);
+        assertThat(decisionReportDto.amount()).isEqualTo(BigDecimal.valueOf(2000));
         assertThat(decisionReportDto.period()).isEqualTo(20);
     }
 
@@ -123,14 +125,14 @@ class LoanDecisionEngineTest {
         LoanDecisionEngine loanDecisionEngine = new LoanDecisionEngine(new InMemoryUserCreditRegistry());
         LoanRequest loanInfoToReviewDto = LoanRequest.builder()
                 .personalCode("49002010976")
-                .amount(2000)
+                .amount(new BigDecimal("2000"))
                 .period(55)
                 .build();
         //when
         LoanOffer decisionReportDto = loanDecisionEngine.decide(loanInfoToReviewDto);
         //then
         assertThat(decisionReportDto.outcome()).isEqualTo(DecisionOutcome.POSITIVE);
-        assertThat(decisionReportDto.amount()).isEqualTo(5500);
+        assertThat(decisionReportDto.amount()).isEqualTo(BigDecimal.valueOf(5500));
         assertThat(decisionReportDto.period()).isEqualTo(55);
     }
 
@@ -140,14 +142,14 @@ class LoanDecisionEngineTest {
         LoanDecisionEngine loanDecisionEngine = new LoanDecisionEngine(new InMemoryUserCreditRegistry());
         LoanRequest loanInfoToReviewDto = LoanRequest.builder()
                 .personalCode("49002010976")
-                .amount(4000)
+                .amount(new BigDecimal("2500"))
                 .period(25)
                 .build();
         //when
         LoanOffer decisionReportDto = loanDecisionEngine.decide(loanInfoToReviewDto);
         //then
         assertThat(decisionReportDto.outcome()).isEqualTo(DecisionOutcome.POSITIVE);
-        assertThat(decisionReportDto.amount()).isEqualTo(2500);
+        assertThat(decisionReportDto.amount()).isEqualTo(BigDecimal.valueOf(2500));
         assertThat(decisionReportDto.period()).isEqualTo(25);
     }
 
@@ -159,13 +161,13 @@ class LoanDecisionEngineTest {
         LoanDecisionEngine loanDecisionEngine = new LoanDecisionEngine(testRegistry);
         LoanRequest loanInfoToReviewDto = LoanRequest.builder()
                 .personalCode("1234567890")
-                .amount(2000)
+                .amount(new BigDecimal("2500"))
                 .period(12)
                 .build();
         //when
         LoanOffer decisionReportDto = loanDecisionEngine.decide(loanInfoToReviewDto);
         //then
         assertThat(decisionReportDto.outcome()).isEqualTo(DecisionOutcome.NEGATIVE);
-        assertThat(decisionReportDto.amount()).isEqualTo(0);
+        assertThat(decisionReportDto.amount()).isEqualTo(BigDecimal.ZERO);
     }
 }

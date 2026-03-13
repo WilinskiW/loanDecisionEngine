@@ -2,10 +2,12 @@ package com.task.decisionengine.domain;
 
 import lombok.Builder;
 
+import java.math.BigDecimal;
+
 @Builder
 public record LoanOffer(
         DecisionOutcome outcome,
-        int amount,
+        BigDecimal amount,
         int period
 ) {
 }
