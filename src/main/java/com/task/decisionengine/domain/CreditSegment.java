@@ -4,7 +4,7 @@ import lombok.Getter;
 
 @Getter
 public enum CreditSegment {
-    DEBT(0),
+    DEBT(-1),
     SEGMENT_1(100),
     SEGMENT_2(300),
     SEGMENT_3(1000);
