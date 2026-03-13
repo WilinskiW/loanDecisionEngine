@@ -68,7 +68,7 @@ class LoanDecisionEngineTest {
 
         @Test
         @DisplayName("Should accept minimum amount")
-        public void should_accept_minimum_amount(){
+        public void should_accept_minimum_amount() {
             //given
             LoanRequest request = buildLoanRequest("49002010965", "2000", 30);
             //when & then
@@ -77,7 +77,7 @@ class LoanDecisionEngineTest {
 
         @Test
         @DisplayName("Should accept maximum amount")
-        public void should_accept_maximum_amount(){
+        public void should_accept_maximum_amount() {
             //given
             LoanRequest request = buildLoanRequest("49002010965", "10000", 30);
             //when & then
@@ -86,7 +86,7 @@ class LoanDecisionEngineTest {
 
         @Test
         @DisplayName("Should accept maximum period")
-        public void should_accept_minimum_period(){
+        public void should_accept_minimum_period() {
             //given
             LoanRequest request = buildLoanRequest("49002010965", "10000", 12);
             //when & then
@@ -95,7 +95,7 @@ class LoanDecisionEngineTest {
 
         @Test
         @DisplayName("Should accept maximum period")
-        public void should_accept_maximum_period(){
+        public void should_accept_maximum_period() {
             //given
             LoanRequest request = buildLoanRequest("49002010965", "10000", 60);
             //when & then
@@ -103,15 +103,66 @@ class LoanDecisionEngineTest {
         }
     }
 
-    @Test
-    public void should_give_no_loan_when_user_has_debt() {
-        //given
-        LoanRequest request = buildLoanRequest("49002010965", "2500", 30);
-        //when
-        LoanOffer offer = engine.decide(request);
-        //then
-        assertThat(offer.outcome()).isEqualTo(DecisionOutcome.NEGATIVE);
-        assertThat(offer.amount()).isEqualTo(BigDecimal.ZERO);
+    @Nested
+    class NegativeOutcomes {
+        @Test
+        @DisplayName("Should return negative decision when user has debt")
+        public void should_return_negative_decision_when_user_has_debt() {
+            //given
+            LoanRequest request = buildLoanRequest("49002010965", "2500", 30);
+            //when
+            LoanOffer offer = engine.decide(request);
+            //then
+            assertThat(offer.outcome()).isEqualTo(DecisionOutcome.NEGATIVE);
+            assertThat(offer.amount()).isEqualTo(BigDecimal.ZERO);
+        }
+
+        @Test
+        @DisplayName("Should return negative decision when user is not found in registry")
+        public void should_return_negative_decision_when_user_is_not_found_in_registry() {
+            //given
+            LoanRequest request = buildLoanRequest("72375010969", "2500", 30);
+            //when
+            LoanOffer offer = engine.decide(request);
+            //then
+            assertThat(offer.outcome()).isEqualTo(DecisionOutcome.NEGATIVE);
+        }
+    }
+
+    @Nested
+    class CreditScore {
+        @Test
+        @DisplayName("Should return negative when credit score is below one")
+        public void should_return_negative_when_credit_score_is_below_one() {
+            //given
+            LoanRequest request = buildLoanRequest("49002010965", "2000", 12);
+            //when
+            LoanOffer offer = engine.decide(request);
+            //then
+            assertThat(offer.outcome()).isEqualTo(DecisionOutcome.NEGATIVE);
+        }
+
+        @Test
+        @DisplayName("Should return positive when credit score is exactly one")
+        public void should_return_positive_when_credit_score_is_exactly_one() {
+            //given
+            LoanRequest request = buildLoanRequest("49002010976", "2000", 20);
+            //when
+            LoanOffer offer = engine.decide(request);
+            //then
+            assertThat(offer.outcome()).isEqualTo(DecisionOutcome.POSITIVE);
+        }
+
+        @Test
+        @DisplayName("Should return positive when credit score is above one")
+        public void should_return_positive_when_credit_score_is_above_one() {
+            //given
+            LoanRequest request = buildLoanRequest("49002010976", "2000", 30);
+            //when
+            LoanOffer offer = engine.decide(request);
+            //then
+            assertThat(offer.outcome()).isEqualTo(DecisionOutcome.POSITIVE);
+        }
     }
 
     @Test
