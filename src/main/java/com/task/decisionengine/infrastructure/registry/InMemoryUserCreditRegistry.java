@@ -1,4 +1,4 @@
-package com.task.decisionengine.infrastructure.db;
+package com.task.decisionengine.infrastructure.registry;
 
 import com.task.decisionengine.domain.CreditSegment;
 import com.task.decisionengine.domain.UserCreditRegistry;

@@ -1,5 +1,7 @@
 package com.task.decisionengine.infrastructure.dto;
 
+import jakarta.validation.constraints.DecimalMax;
+import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -11,8 +13,8 @@ public record LoanRequestDto(
         String personalCode,
 
         @NotNull(message = "Amount is required")
-        @Min(value = 2000, message = "Amount must be at least 2000")
-        @Max(value = 10000, message = "Amount must be at most 10000")
+        @DecimalMin(value = "2000", message = "Amount must be at least 2000")
+        @DecimalMax(value = "10000", message = "Amount must be at most 10000")
         BigDecimal amount,
 
         @NotNull(message = "Period is required")

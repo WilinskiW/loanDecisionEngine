@@ -1,4 +1,4 @@
-package com.task.decisionengine.infrastructure;
+package com.task.decisionengine.infrastructure.offer;
 
 import com.task.decisionengine.domain.LoanDecisionEngine;
 import com.task.decisionengine.domain.LoanOffer;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("api/offer")
+@RequestMapping("/api/offer")
 public class LoanOfferController {
     private final LoanDecisionEngine engine;
 
@@ -22,8 +22,8 @@ public class LoanOfferController {
 
     @PostMapping
     public ResponseEntity<LoanOfferResponseDto> getOffer(@RequestBody @Valid LoanRequestDto request) {
-        var mappedRequest = LoanMapper.mapToDomainLoanRequest(request);
+        var mappedRequest = LoanMapper.toDomain(request);
         LoanOffer offer = engine.decide(mappedRequest);
-        return ResponseEntity.ok(LoanMapper.mapToDtoLoanResponse(offer));
+        return ResponseEntity.ok(LoanMapper.toResponseDto(offer));
     }
 }
