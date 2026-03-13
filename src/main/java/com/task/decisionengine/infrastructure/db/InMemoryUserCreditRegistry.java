@@ -1,10 +1,12 @@
-package com.task.decisionengine.infrastructure;
+package com.task.decisionengine.infrastructure.db;
 
 import com.task.decisionengine.domain.CreditSegment;
 import com.task.decisionengine.domain.UserCreditRegistry;
+import org.springframework.stereotype.Repository;
 
 import java.util.Map;
 
+@Repository
 public class InMemoryUserCreditRegistry implements UserCreditRegistry {
     private final Map<String, CreditSegment> registry;
 

@@ -1,6 +1,6 @@
 package com.task.decisionengine.domain;
 
-import com.task.decisionengine.infrastructure.InMemoryUserCreditRegistry;
+import com.task.decisionengine.infrastructure.db.InMemoryUserCreditRegistry;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
