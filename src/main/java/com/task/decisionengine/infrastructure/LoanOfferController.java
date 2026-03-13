@@ -4,6 +4,7 @@ import com.task.decisionengine.domain.LoanDecisionEngine;
 import com.task.decisionengine.domain.LoanOffer;
 import com.task.decisionengine.infrastructure.dto.LoanOfferResponseDto;
 import com.task.decisionengine.infrastructure.dto.LoanRequestDto;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,7 +21,7 @@ public class LoanOfferController {
     }
 
     @PostMapping
-    public ResponseEntity<LoanOfferResponseDto> getOffer(@RequestBody LoanRequestDto request) {
+    public ResponseEntity<LoanOfferResponseDto> getOffer(@RequestBody @Valid LoanRequestDto request) {
         var mappedRequest = LoanMapper.mapToDomainLoanRequest(request);
         LoanOffer offer = engine.decide(mappedRequest);
         return ResponseEntity.ok(LoanMapper.mapToDtoLoanResponse(offer));
