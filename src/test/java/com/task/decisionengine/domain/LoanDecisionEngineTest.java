@@ -7,8 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 
 class LoanDecisionEngineTest {
     private final LoanDecisionEngine engine = new LoanDecisionEngine(new InMemoryUserCreditRegistry());
@@ -65,6 +64,42 @@ class LoanDecisionEngineTest {
             assertThatThrownBy(() -> engine.decide(request))
                     .isInstanceOf(LoanValidationException.class)
                     .hasMessage("Loan period must be between 12 and 60");
+        }
+
+        @Test
+        @DisplayName("Should accept minimum amount")
+        public void should_accept_minimum_amount(){
+            //given
+            LoanRequest request = buildLoanRequest("49002010965", "2000", 30);
+            //when & then
+            assertThatNoException().isThrownBy(() -> engine.decide(request));
+        }
+
+        @Test
+        @DisplayName("Should accept maximum amount")
+        public void should_accept_maximum_amount(){
+            //given
+            LoanRequest request = buildLoanRequest("49002010965", "10000", 30);
+            //when & then
+            assertThatNoException().isThrownBy(() -> engine.decide(request));
+        }
+
+        @Test
+        @DisplayName("Should accept maximum period")
+        public void should_accept_minimum_period(){
+            //given
+            LoanRequest request = buildLoanRequest("49002010965", "10000", 12);
+            //when & then
+            assertThatNoException().isThrownBy(() -> engine.decide(request));
+        }
+
+        @Test
+        @DisplayName("Should accept maximum period")
+        public void should_accept_maximum_period(){
+            //given
+            LoanRequest request = buildLoanRequest("49002010965", "10000", 60);
+            //when & then
+            assertThatNoException().isThrownBy(() -> engine.decide(request));
         }
     }
 
