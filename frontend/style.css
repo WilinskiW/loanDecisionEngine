@@ -1,0 +1,78 @@
+:root {
+    --dark-purple: #300E54;
+    --light-purple: #AA93FF;
+    --bg-purple: #E3D2FF;
+}
+
+@font-face {
+    font-family: Inter;
+    src: url(fonts/inter_medium.woff2);
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: Inter;
+    src: url(fonts/inter_regular.woff2);
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: Quicksand;
+    src: url(fonts/quicksand_medium.woff2);
+    font-weight: 500;
+}
+
+body {
+    font-size: 32px;
+    color: var(--dark-purple);
+    font-family: Inter, sans-serif;
+    background-color: var(--bg-purple);
+    margin-left: 3.75rem;
+    margin-right: 3.75rem;
+}
+
+h1 {
+    font-family: Quicksand, sans-serif;
+    margin-bottom: 2rem;
+}
+
+p {
+    font-weight: lighter;
+    font-size: 1.5rem;
+}
+
+
+.app-container {
+    display: flex;
+    justify-content: center;
+    padding: 3rem;
+}
+
+.left-col {
+    display: flex;
+    width: 50%;
+}
+
+.left-col__text {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.left-col p {
+    line-height: 2.5rem;
+    max-width: 600px;
+}
+
+.vertical-line {
+    display: flex;
+    justify-content: center;
+    width: 1px;
+    background-color: #300E54;
+    height: 100%;
+    margin: 30px 5px 30px 5px;
+}
+
+.right-col {
+    width: 50%;
+}
