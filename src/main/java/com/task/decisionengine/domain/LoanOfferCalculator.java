@@ -1,6 +1,7 @@
 package com.task.decisionengine.domain;
 
-import java.math.BigDecimal;
+import static com.task.decisionengine.domain.LoanOffer.buildNegativeOutcome;
+import static com.task.decisionengine.domain.LoanOffer.buildPositiveOutcome;
 
 class LoanOfferCalculator {
     private final UserCreditRegistry userCreditRegistry;
@@ -32,17 +33,4 @@ class LoanOfferCalculator {
 
         return buildNegativeOutcome(request.period());
     }
-
-    private LoanOffer buildNegativeOutcome(int period){
-        return new LoanOffer(DecisionOutcome.NEGATIVE, BigDecimal.ZERO, period);
-    }
-
-    private LoanOffer buildPositiveOutcome(int amount, int period){
-        return LoanOffer.builder()
-                .outcome(DecisionOutcome.POSITIVE)
-                .amount(new BigDecimal(Math.min(amount, LoanValidator.MAX_LOAN_AMOUNT.intValue())))
-                .period(period)
-                .build();
-    }
-
 }
