@@ -2,6 +2,7 @@
     --dark-purple: #300E54;
     --light-purple: #AA93FF;
     --bg-purple: #E3D2FF;
+    --border-alpha: rgba(48, 14, 84, 0.55);
     --light: #FBFBF9
 }
 
@@ -26,132 +27,169 @@
 body {
     font-size: 32px;
     color: var(--dark-purple);
-    font-family: Inter, sans-serif;
+    font-family: 'Inter', sans-serif;
     background-color: var(--bg-purple);
-    margin-left: 3.75rem;
-    margin-right: 3.75rem;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
 }
 
 h1 {
-    font-family: Quicksand, sans-serif;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 500;
     margin-bottom: 2rem;
+    font-size: 1.5em;
 }
 
 p {
-    font-weight: lighter;
-    font-size: 1.5rem;
-}
-
-
-.app-container {
-    display: flex;
-    justify-content: center;
-    padding: 3rem;
-}
-
-.left-col {
-    display: flex;
-    width: 50%;
-}
-
-.left-col__text {
-    display: flex;
-    flex-direction: column;
-}
-
-
-.left-col p {
-    line-height: 2.5rem;
+    font-weight: 400;
+    font-size: 0.6em;
+    line-height: 1.6;
     max-width: 600px;
 }
 
-.vertical-line {
+.app-container {
     display: flex;
-    justify-content: center;
-    width: 1px;
+    width: 90%;
+    max-width: 1400px;
+    align-items: center;
+    gap: 20px;
+}
+
+.left-col {
+    flex: 1;
+}
+
+.vertical-line {
+    width: 2px;
+    height: 350px;
     background-color: var(--dark-purple);
-    height: 100%;
-    margin: 30px 5px 30px 5px;
+    opacity: 0.2;
+    margin: 0 40px;
 }
 
 .right-col {
+    flex: 2;
     display: flex;
-    justify-content: center;
-    width: 50%;
+    gap: 60px;
+    align-items: flex-start;
 }
 
-.sliders-col {
-    width: 100%;
+.sliders-section {
+    flex: 1.2;
     display: flex;
-    justify-content: space-between;
+    align-items: center;
     flex-direction: column;
+    gap: 40px;
+}
+
+.slider-group {
+    width: 100%;
 }
 
 .slider-values {
-    font-size: 1rem;
-    color: #726980;
-    padding: 0 5px 0 0;
-    font-weight: normal;
     display: flex;
     justify-content: space-between;
+    font-size: 18px;
+    color: #726980;
+    margin-top: 10px;
 }
 
 .slider {
-    -webkit-appearance: none;  /* Override default CSS styles */
+    -webkit-appearance: none;
     appearance: none;
     width: 100%;
-    height: 5px;
+    height: 6px;
     background: #CCBDE5;
+    border-radius: 10px;
     outline: none;
-    opacity: 0.7;
-    -webkit-transition: .2s;
-    transition: opacity .2s;
-    border-radius: 40px;
-    margin: 25px 0 15px 0
 }
 
-.slider:hover {
-    opacity: 1;
-}
-
-/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
 .slider::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
     width: 49px;
     height: 30px;
-    background: url("images/slider_button.svg");
-    border-radius: 60px;
+    background: url("images/slider_button.svg") no-repeat center;
     cursor: pointer;
+    border: none;
 }
 
 .slider::-moz-range-thumb {
     width: 49px;
     height: 30px;
-    background: url("images/slider_button.svg");
-    border: none;
-    border-radius: 60px;
     cursor: pointer;
+    border: none;
+    background: transparent url("images/slider_button.svg") no-repeat center;
+}
+
+.slider::-moz-range-track {
+    width: 100%;
+    height: 6px;
+    background: #CCBDE5;
+    border-radius: 10px;
 }
 
 .form-button {
-    font-size: 1rem;
-    font-weight: bolder;
+    font-size: 24px;
     color: var(--dark-purple);
-    width: 164px;
-    height: 50px;
-    border: none;
-    border-radius: 20px;
     background-color: var(--light-purple);
+    border: none;
+    padding: 15px 45px;
+    border-radius: 20px;
+    cursor: pointer;
+    width: fit-content;
+    margin-top: 20px;
 }
 
-.field {
-    color: var(--dark-purple);
-    max-width: 170px;
-    border: 1px solid var(--dark-purple);
-    border-radius: 10px;
-    padding: 0.5rem 0.25rem 0.5rem 0.25rem;
+.fields-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+
+.custom-field {
+    position: relative;
     background-color: var(--light);
+    border: 2px solid var(--border-alpha);
+    border-radius: 12px;
+    padding: 12px 15px;
+}
+
+.field-label {
+    position: absolute;
+    top: -23px;
+    left: 10px;
+    background-color: var(--light);
+    border: 2px solid var(--border-alpha);
+    border-bottom: none;
+    font-size: 14px;
+    color: #726980;
+    padding: 2px 12px;
+    border-radius: 8px 8px 0 0;
+}
+
+.field-input-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.field-input-wrapper input {
+    border: none;
+    background: transparent;
+    font-size: 26px;
+    font-family: 'Inter', sans-serif;
+    color: var(--dark-purple);
+    width: 100%;
+    outline: none;
+}
+
+.currency {
+    margin-right: 8px;
+    font-size: 26px;
 }
 
 input::-webkit-outer-spin-button,
@@ -160,8 +198,6 @@ input::-webkit-inner-spin-button {
     margin: 0;
 }
 
-/* Firefox */
 input[type=number] {
     -moz-appearance: textfield;
 }
-

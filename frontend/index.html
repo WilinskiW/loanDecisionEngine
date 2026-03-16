@@ -10,37 +10,60 @@
 <body>
 <div class="app-container">
     <div class="left-col">
-        <div class="left_col__text">
+        <div class="left-col__text">
             <h1>Check your loan offer</h1>
-            <p>Need extra funds to achieve your goals? Use our calculator to instantly check your available financing.
-                Simply enter your personal code and choose your desired amount and repayment period. We’ll take care of
-                the rest, preparing a proposal tailored to your current situation – fast, secure, and fully online.</p>
+            <p>Need extra funds to achieve your goals? Use our calculator to instantly check your available financing. Simply enter your personal code and choose your desired amount and repayment period. We’ll take care of the rest, preparing a proposal tailored to your current situation – fast, secure, and fully online.</p>
         </div>
-        <div class="vertical-line"></div>
     </div>
+
+    <div class="vertical-line"></div>
+
     <div class="right-col">
-        <div class="sliders-col">
-            <div class="sliders">
+
+        <div class="sliders-section">
+            <div class="slider-group">
                 <input class="slider" type="range" min="2000" max="10000" value="5000" step="50">
                 <div class="slider-values">
-                    <div class="slider-value min">2000 €</div>
-                    <div class="slider-value max">10000 €</div>
+                    <span>2000 €</span>
+                    <span>10 000 €</span>
                 </div>
-                <input class="slider" type="range" min="12" max="60" value="30" step="1">
             </div>
-            <input class="form-button" type="submit" value="Get Loan">
-        </div>
-        <div class="form-col">
-            <form class="action-form">
-                <div class="amount-field-container">
-                    <label>
-                        <input class="field amount" type="number">
-                    </label>
+
+            <div class="slider-group">
+                <input class="slider" type="range" min="12" max="60" value="30" step="1">
+                <div class="slider-values">
+                    <span>12 months</span>
+                    <span>60 months</span>
                 </div>
-                <input class="field" type="number">
-                <input class="field" type="text">
-            </form>
+            </div>
+
+            <button class="form-button">Get Loan</button>
         </div>
+
+        <div class="fields-section">
+            <div class="custom-field">
+                <span class="field-label">Amount</span>
+                <div class="field-input-wrapper">
+                    <span class="currency">€</span>
+                    <input type="number" value="5000">
+                </div>
+            </div>
+
+            <div class="custom-field">
+                <span class="field-label">Period</span>
+                <div class="field-input-wrapper">
+                    <input type="number" value="30">
+                </div>
+            </div>
+
+            <div class="custom-field">
+                <span class="field-label">Personal code</span>
+                <div class="field-input-wrapper">
+                    <input type="text" placeholder="">
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 </body>
