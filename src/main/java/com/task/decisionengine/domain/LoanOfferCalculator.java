@@ -11,26 +11,34 @@ class LoanOfferCalculator {
     }
 
     LoanOffer calculate(LoanRequest request) {
-        int creditModifier = userCreditRegistry.findCreditModifier(request.personalCode());
+        int modifier = userCreditRegistry.findCreditModifier(request.personalCode());
 
-        if (creditModifier <= 0) {
+        if (modifier <= 0) {
             return buildNegativeOutcome(request.period());
         }
 
-        int maxAmount = creditModifier * request.period();
+        int maxAmount = modifier * request.period();
 
-        if (maxAmount >= LoanValidator.MIN_LOAN_AMOUNT.intValue()) {
+        if (maxAmount >= Loan.MIN_LOAN_AMOUNT.intValue()) {
             return buildPositiveOutcome(maxAmount, request.period());
         }
 
-        int requiredPeriod = LoanValidator.MIN_LOAN_AMOUNT.intValue() / creditModifier;
+        return findBestAlternative(modifier, request);
+    }
 
-        if(requiredPeriod <= LoanValidator.MAX_LOAN_PERIOD){
-            int finalPeriod = Math.max(requiredPeriod, LoanValidator.MIN_LOAN_PERIOD);
-            int finalAmount = Math.min(creditModifier * finalPeriod, LoanValidator.MAX_LOAN_AMOUNT.intValue());
+    private LoanOffer findBestAlternative(int modifier, LoanRequest request){
+        int requiredPeriod = Loan.MIN_LOAN_AMOUNT.intValue() / modifier;
+
+        if(isPeriodWithinRange(requiredPeriod)){
+            int finalPeriod = Math.max(requiredPeriod, Loan.MIN_LOAN_PERIOD);
+            int finalAmount = Math.min(modifier * finalPeriod, Loan.MAX_LOAN_AMOUNT.intValue());
             return buildPositiveOutcome(finalAmount, finalPeriod);
         }
 
         return buildNegativeOutcome(request.period());
+    }
+
+    private boolean isPeriodWithinRange(int period){
+        return period >= Loan.MIN_LOAN_PERIOD && period <= Loan.MAX_LOAN_PERIOD;
     }
 }
