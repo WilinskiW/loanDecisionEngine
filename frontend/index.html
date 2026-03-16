@@ -22,7 +22,7 @@
 
         <div class="sliders-section">
             <div class="slider-group">
-                <input class="slider" type="range" min="2000" max="10000" value="5000" step="50">
+                <input class="slider" type="range" min="2000" max="10000" value="5000" step="100">
                 <div class="slider-values">
                     <span>2000 €</span>
                     <span>10 000 €</span>
@@ -45,14 +45,14 @@
                 <span class="field-label">Amount</span>
                 <div class="field-input-wrapper">
                     <span class="currency">€</span>
-                    <input type="number" value="5000">
+                    <input type="number" value="5000" min="2000" max="10000">
                 </div>
             </div>
 
             <div class="custom-field">
                 <span class="field-label">Period</span>
                 <div class="field-input-wrapper">
-                    <input type="number" value="30">
+                    <input type="number" value="30" min="12" max="60">
                 </div>
             </div>
 

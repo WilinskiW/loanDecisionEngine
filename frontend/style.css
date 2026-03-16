@@ -132,6 +132,12 @@ p {
     border-radius: 10px;
 }
 
+.slider::-moz-range-progress {
+    height: 6px;
+    background-color: var(--dark-purple);
+    border-radius: 10px;
+}
+
 .form-button {
     font-size: 24px;
     color: var(--dark-purple);
