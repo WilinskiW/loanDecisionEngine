@@ -56,16 +56,34 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    setupSync(amountSlider, amountInput);
-    setupSync(periodSlider, periodInput);
-
-    updateSliderFill(amountSlider);
-    updateSliderFill(periodSlider);
-
-    const loanButton = document.querySelector('.form-button');
-    if (loanButton) {
-        loanButton.addEventListener('click', () => {
-            alert(`Requesting loan: ${amountInput.value} € for ${periodInput.value} months.`);
-        });
+    const makeRequest = (sliders, inputs) => {
+        fetch('http://localhost:8080/api/offer', {
+            method: 'POST',
+            body: JSON.stringify({
+                    amount: sliders[0].value,
+                    period: sliders[1].value,
+                    personalCode: inputs[2].value
+                }
+            ),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+            }})
+            .then(response => response.json())
+            .then(data => console.log(data))
     }
-});
+
+        setupSync(amountSlider, amountInput);
+        setupSync(periodSlider, periodInput);
+
+        updateSliderFill(amountSlider);
+        updateSliderFill(periodSlider);
+
+        const loanButton = document.querySelector('.form-button');
+        if (loanButton) {
+            loanButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                makeRequest(sliders, inputs);
+            });
+        }
+    }
+);

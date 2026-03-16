@@ -6,6 +6,7 @@ import com.task.decisionengine.infrastructure.dto.LoanOfferResponseDto;
 import com.task.decisionengine.infrastructure.dto.LoanRequestDto;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/offer")
+@CrossOrigin(origins = "http://localhost:63342")
 public class LoanOfferController {
     private final LoanDecisionEngine engine;
 
