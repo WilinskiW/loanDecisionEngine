@@ -2,6 +2,7 @@
     --dark-purple: #300E54;
     --light-purple: #AA93FF;
     --bg-purple: #E3D2FF;
+    --light: #FBFBF9
 }
 
 @font-face {
@@ -75,13 +76,24 @@ p {
 
 .right-col {
     display: flex;
+    justify-content: center;
     width: 50%;
 }
 
 .sliders-col {
     width: 100%;
     display: flex;
+    justify-content: space-between;
     flex-direction: column;
+}
+
+.slider-values {
+    font-size: 1rem;
+    color: #726980;
+    padding: 0 5px 0 0;
+    font-weight: normal;
+    display: flex;
+    justify-content: space-between;
 }
 
 .slider {
@@ -95,7 +107,7 @@ p {
     -webkit-transition: .2s;
     transition: opacity .2s;
     border-radius: 40px;
-    margin: 25px 0 25px 0
+    margin: 25px 0 15px 0
 }
 
 .slider:hover {
@@ -108,7 +120,7 @@ p {
     appearance: none;
     width: 49px;
     height: 30px;
-    background: var(--light-purple);
+    background: url("images/slider_button.svg");
     border-radius: 60px;
     cursor: pointer;
 }
@@ -116,7 +128,7 @@ p {
 .slider::-moz-range-thumb {
     width: 49px;
     height: 30px;
-    background: var(--light-purple);
+    background: url("images/slider_button.svg");
     border: none;
     border-radius: 60px;
     cursor: pointer;
@@ -131,5 +143,25 @@ p {
     border: none;
     border-radius: 20px;
     background-color: var(--light-purple);
+}
+
+.field {
+    color: var(--dark-purple);
+    max-width: 170px;
+    border: 1px solid var(--dark-purple);
+    border-radius: 10px;
+    padding: 0.5rem 0.25rem 0.5rem 0.25rem;
+    background-color: var(--light);
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
 }
 
