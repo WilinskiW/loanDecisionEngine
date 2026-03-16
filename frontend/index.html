@@ -42,19 +42,19 @@
                 <div class="custom-field">
                     <span class="field-label">Amount</span>
                     <div class="field-input-wrapper">
-                        <span class="currency">€</span>
-                        <input type="number" value="5000" min="2000" max="10000">
+                        <label for="amount" class="currency">€</label>
+                        <input id="amount" type="number" value="5000" min="2000" max="10000">
                     </div>
                 </div>
                 <div class="custom-field">
-                    <span class="field-label">Period</span>
-                    <div class="field-input-wrapper">
+                    <label for="period" class="field-label">Period</label>
+                    <div id="period" class="field-input-wrapper">
                         <input type="number" value="30" min="12" max="60">
                     </div>
                 </div>
                 <div class="custom-field">
-                    <span class="field-label">Personal code</span>
-                    <div class="field-input-wrapper">
+                    <label for="personal-code" class="field-label">Personal code</label>
+                    <div id="personal-code" class="field-input-wrapper">
                         <input type="text" placeholder="">
                     </div>
                 </div>
@@ -62,17 +62,30 @@
         </div>
 
         <div class="result-view hidden">
-            <button class="back-button" title="Back">←</button>
+            <button class="back-button" title="Back"></button>
             <div class="result-card">
                 <h2>Your offer is ready</h2>
                 <div class="result-details">
                     <p>Approved Amount: <span id="res-amount">0</span> <b>€</b></p>
                     <p>Repayment Period: <span id="res-period">0</span> <b>months</b></p>
                 </div>
-                <button class="form-button">Get Loan</button>
+                <button class="form-button accept-offer">Accept offer</button>
+            </div>
+        </div>
+
+        <div class="declined-view hidden">
+            <button class="back-button" title="Back"></button>
+            <div class="result-card">
+                <h2>We’re sorry</h2>
+                <div class="declined-details">
+                    <p>No loan is possible for the selected parameters.
+                        Based on your credit profile, we couldn't find a suitable period or amount within our limits.</p>
+                </div>
+                <button class="form-button back-to-calc">Try again</button>
             </div>
         </div>
     </div>
+
     </div>
 </body>
 </html>
