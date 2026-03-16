@@ -207,3 +207,74 @@ input::-webkit-inner-spin-button {
 input[type=number] {
     -moz-appearance: textfield;
 }
+
+/* Logika przełączania widoków */
+.hidden {
+    display: none !important;
+}
+
+.calculator-view {
+    display: flex;
+    gap: 60px;
+    width: 100%;
+}
+
+/* Stylizacja widoku wyniku */
+.result-view {
+    display: flex;
+    align-items: flex-start;
+    gap: 30px;
+    width: 100%;
+    position: relative;
+}
+
+/* Przycisk wstecz */
+.back-button {
+    background-color: var(--light-purple);
+    color: var(--dark-purple);
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s;
+}
+
+.back-button:hover {
+    transform: scale(1.1);
+}
+
+/* Karta wyniku */
+.result-card {
+    background-color: var(--light);
+    flex: 1;
+    padding: 60px;
+    border-radius: 30px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+.result-card h2 {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 56px;
+    margin-top: 0;
+    margin-bottom: 40px;
+}
+
+.result-details {
+    margin-bottom: 50px;
+}
+
+.result-details p {
+    font-size: 32px;
+    margin: 15px 0;
+    max-width: 100%; /* Nadpisanie globalnego p */
+}
+
+.result-details span {
+    font-weight: bold;
+}
