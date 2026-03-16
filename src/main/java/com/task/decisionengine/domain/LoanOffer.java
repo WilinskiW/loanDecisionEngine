@@ -4,6 +4,8 @@ import lombok.Builder;
 
 import java.math.BigDecimal;
 
+import static com.task.decisionengine.domain.Loan.clampAmount;
+
 @Builder
 public record LoanOffer(
         DecisionOutcome outcome,
@@ -14,10 +16,10 @@ public record LoanOffer(
         return new LoanOffer(DecisionOutcome.NEGATIVE, BigDecimal.ZERO, period);
     }
 
-    static LoanOffer buildPositiveOutcome(int amount, int period){
+    static LoanOffer buildPositiveOutcome(BigDecimal amount, int period){
         return LoanOffer.builder()
                 .outcome(DecisionOutcome.POSITIVE)
-                .amount(new BigDecimal(Math.min(amount, Loan.MAX_LOAN_AMOUNT.intValue())))
+                .amount(clampAmount(amount))
                 .period(period)
                 .build();
     }

@@ -1,5 +1,9 @@
 package com.task.decisionengine.domain;
 
+import java.math.BigDecimal;
+
+import static com.task.decisionengine.domain.Loan.calculateMaxAmount;
+import static com.task.decisionengine.domain.Loan.isLoanAffordable;
 import static com.task.decisionengine.domain.LoanOffer.buildNegativeOutcome;
 import static com.task.decisionengine.domain.LoanOffer.buildPositiveOutcome;
 
@@ -13,32 +17,35 @@ class LoanOfferCalculator {
     LoanOffer calculate(LoanRequest request) {
         int modifier = userCreditRegistry.findCreditModifier(request.personalCode());
 
-        if (modifier <= 0) {
+        if (isIneligible(modifier)) {
             return buildNegativeOutcome(request.period());
         }
 
-        int maxAmount = modifier * request.period();
+        var maxAmountForRequestedPeriod = calculateMaxAmount(modifier, request.period());
 
-        if (maxAmount >= Loan.MIN_LOAN_AMOUNT.intValue()) {
-            return buildPositiveOutcome(maxAmount, request.period());
+        if (isLoanAffordable(maxAmountForRequestedPeriod)) {
+            return buildPositiveOutcome(maxAmountForRequestedPeriod, request.period());
         }
 
-        return findBestAlternative(modifier, request);
+        return findAlternativeOffer(modifier);
     }
 
-    private LoanOffer findBestAlternative(int modifier, LoanRequest request){
-        int requiredPeriod = Loan.MIN_LOAN_AMOUNT.intValue() / modifier;
+    private boolean isIneligible(int modifier) {
+        return modifier <= 0;
+    }
 
-        if(isPeriodWithinRange(requiredPeriod)){
-            int finalPeriod = Math.max(requiredPeriod, Loan.MIN_LOAN_PERIOD);
-            int finalAmount = Math.min(modifier * finalPeriod, Loan.MAX_LOAN_AMOUNT.intValue());
-            return buildPositiveOutcome(finalAmount, finalPeriod);
+    private LoanOffer findAlternativeOffer(int modifier) {
+        int requiredPeriod = (int) Math.ceil(Loan.MIN_AMOUNT.doubleValue() / modifier);
+
+        if (isPeriodValid(requiredPeriod)) {
+            BigDecimal amount = calculateMaxAmount(modifier, requiredPeriod);
+            return buildPositiveOutcome(amount, requiredPeriod);
         }
 
-        return buildNegativeOutcome(request.period());
+        return buildNegativeOutcome(Loan.MIN_PERIOD);
     }
 
-    private boolean isPeriodWithinRange(int period){
-        return period >= Loan.MIN_LOAN_PERIOD && period <= Loan.MAX_LOAN_PERIOD;
+    private boolean isPeriodValid(int period) {
+        return period >= Loan.MIN_PERIOD && period <= Loan.MAX_PERIOD;
     }
 }
