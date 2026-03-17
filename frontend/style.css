@@ -295,3 +295,33 @@ input[type=number] {
 .declined-view .form-button {
     margin: 0 auto;
 }
+
+@media (max-width: 1024px) {
+    .app-container {
+        flex-direction: column;
+    }
+
+    .vertical-line {
+        display: none;
+    }
+}
+@media (max-width: 768px) {
+    .body {
+        font-size: 24px;
+    }
+
+    .app-container {
+        gap: 20px;
+    }
+
+    .result-view, .declined-view {
+        flex-direction: column;
+        padding: 30px;
+    }
+
+    .back-button {
+        width: 80px;
+        height: 60px;
+        background-size: 100%;
+    }
+}
