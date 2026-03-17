@@ -6,11 +6,11 @@ import lombok.Getter;
 import java.math.BigDecimal;
 
 @Getter(AccessLevel.PACKAGE)
-class Loan {
-    static final BigDecimal MIN_AMOUNT = new BigDecimal("2000");
-    static final BigDecimal MAX_AMOUNT = new BigDecimal("10000");
-    static final int MIN_PERIOD = 12;
-    static final int MAX_PERIOD = 60;
+public class Loan {
+    static final BigDecimal MIN_LOAN_AMOUNT = new BigDecimal("2000");
+    static final BigDecimal MAX_LOAN_AMOUNT = new BigDecimal("10000");
+    static final int MIN_LOAN_PERIOD = 12;
+    static final int MAX_LOAN_PERIOD = 60;
 
     private final BigDecimal amount;
     private final int period;
@@ -23,24 +23,12 @@ class Loan {
 
 
     static void validate(BigDecimal amount, int period) {
-        if (amount.compareTo(MIN_AMOUNT) < 0 || amount.compareTo(MAX_AMOUNT) > 0) {
+        if (amount.compareTo(MIN_LOAN_AMOUNT) < 0 || amount.compareTo(MAX_LOAN_AMOUNT) > 0) {
             throw new LoanValidationException("Loan amount must be between 2000 and 10000");
         }
 
-        if (period < MIN_PERIOD || period > MAX_PERIOD) {
+        if (period < MIN_LOAN_PERIOD || period > MAX_LOAN_PERIOD) {
             throw new LoanValidationException("Loan period must be between 12 and 60");
         }
-    }
-
-    static BigDecimal calculateMaxAmount(int creditModifier, int period) {
-        return BigDecimal.valueOf((long) creditModifier * period);
-    }
-
-    static boolean isLoanAffordable(BigDecimal amount){
-        return amount.compareTo(Loan.MIN_AMOUNT) >= 0;
-    }
-
-    static BigDecimal clampAmount(BigDecimal amount) {
-        return amount.min(MAX_AMOUNT).max(MIN_AMOUNT);
     }
 }
