@@ -20,7 +20,7 @@ public class InMemoryUserCreditRegistry implements UserCreditRegistry {
     }
 
     @Override
-    public int findCreditModifier(String personalCode) {
+    public int getCreditModifier(String personalCode) {
         return registry.getOrDefault(personalCode, CreditSegment.DEBT).getCreditModifier();
     }
 }
