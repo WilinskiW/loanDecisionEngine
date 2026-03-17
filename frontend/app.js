@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const declinedView = document.querySelector('.declined-view');
 
     const resAmountSpan = document.getElementById('res-amount');
-    const resPeriodSpan = document.getElementById('res-period');
+    //const resPeriodSpan = document.getElementById('res-period');
 
     const toggleView = (viewName) => {
         calculatorView.classList.add('hidden');
@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const decision = new Decision(data.outcome, data.amount);
                 if (decision.getOutcome() === 'POSITIVE') {
                     resAmountSpan.textContent = decision.getAmount().toLocaleString();
-                    resPeriodSpan.textContent = sliders[1].value;
+                    //resPeriodSpan.textContent = sliders[1].value;
                     toggleView('pos');
                 } else {
                     toggleView('neg');
