@@ -5,11 +5,15 @@ import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 import java.math.BigDecimal;
 
 public record LoanRequestDto(
         @NotNull(message = "Personal code is required")
+        @Size(min = 11, max = 11, message = "Personal code must be exactly 11 characters long")
+        @Pattern(regexp = "^\\d+$", message = "Personal code must contain only numbers")
         String personalCode,
 
         @NotNull(message = "Amount is required")

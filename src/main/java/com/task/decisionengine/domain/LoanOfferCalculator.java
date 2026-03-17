@@ -39,7 +39,7 @@ class LoanOfferCalculator {
     }
 
     private LoanOffer findAlternativeOffer(int modifier, int requestedPeriod){
-        int requiredPeriod = calculateRequiredPeriod(requestedPeriod);
+        int requiredPeriod = calculateRequiredPeriod(modifier);
 
         if(isPeriodInRange(requiredPeriod)){
             return calculateFinalOffer(modifier, requiredPeriod);

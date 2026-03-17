@@ -76,6 +76,12 @@ public class LoanOfferControllerIntegrationTest {
 
         var aboveMaximumPeriodRequest = new LoanRequest("49002010987", new BigDecimal("4000"), 61);
         makeValidationPostRequest(aboveMaximumPeriodRequest, "Period must be at most 60");
+
+        var personalCodeWithLetters = new LoanRequest("abcdeftgfgf", new BigDecimal("4000"), 12);
+        makeValidationPostRequest(personalCodeWithLetters, "Personal code must contain only numbers");
+
+        var shortPersonalCode = new LoanRequest("12345", new BigDecimal("4000"), 12);
+        makeValidationPostRequest(shortPersonalCode, "Personal code must be exactly 11 characters long");
     }
 
     private void makeValidationPostRequest(LoanRequest body, String errorMessage){
@@ -87,5 +93,51 @@ public class LoanOfferControllerIntegrationTest {
                 .expectBody()
                 .jsonPath("$.message").isEqualTo(errorMessage)
                 .jsonPath("$.status").isEqualTo(400);
+    }
+
+    @Test
+    @DisplayName("Should return positive offer by extending period internally when requested period is too short")
+    void should_return_positive_by_extending_period() {
+        var request = new LoanRequest("49002010976", new BigDecimal("2000"), 12);
+
+        restTestClient.post()
+                .uri("/api/offer")
+                .body(request)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$.outcome").isEqualTo("POSITIVE")
+                .jsonPath("$.amount").isEqualTo(2000);
+    }
+
+    @Test
+    @DisplayName("Should return reduced amount based on credit modifier and period")
+    void should_return_reduced_amount() {
+        var request = new LoanRequest("49002010976", new BigDecimal("4000"), 25);
+
+        restTestClient.post()
+                .uri("/api/offer")
+                .body(request)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$.outcome").isEqualTo("POSITIVE")
+                .jsonPath("$.amount").isEqualTo(2500);
+    }
+
+    @Test
+    @DisplayName("Should strictly return only outcome and amount fields")
+    void should_return_only_required_fields() {
+        var request = new LoanRequest("49002010987", new BigDecimal("4000"), 12);
+
+        restTestClient.post()
+                .uri("/api/offer")
+                .body(request)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$.outcome").exists()
+                .jsonPath("$.amount").exists()
+                .jsonPath("$.period").doesNotExist();
     }
 }

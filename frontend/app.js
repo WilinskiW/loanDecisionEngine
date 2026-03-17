@@ -95,7 +95,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.querySelector('.form-button').addEventListener('click', (e) => {
         e.preventDefault();
-        makeRequest();
+        if (inputs[2].value.length === 11) {
+            makeRequest();
+        }
     });
 
     document.querySelectorAll('.back-button, .back-to-calc').forEach(btn => {
