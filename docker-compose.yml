@@ -1,9 +1,7 @@
-version: '3.1'
-
 services:
   loan-decision-engine:
-    container_name: loan-decision-engine
-    build: .
+    container_name: loan_decision_engine
+    build: 706258268771.dkr.ecr.eu-central-1.amazonaws.com/loan-engine:latest
     restart: always
     ports:
       - '8000:8000'
