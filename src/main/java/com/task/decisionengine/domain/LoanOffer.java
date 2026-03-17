@@ -17,7 +17,7 @@ public record LoanOffer(
     static LoanOffer buildPositiveOutcome(int amount, int period){
         return LoanOffer.builder()
                 .outcome(DecisionOutcome.POSITIVE)
-                .amount(new BigDecimal(Math.min(amount, Loan.MAX_LOAN_AMOUNT.intValue())))
+                .amount(new BigDecimal(Math.min(amount, LoanValidator.MAX_LOAN_AMOUNT.intValue())))
                 .period(period)
                 .build();
     }

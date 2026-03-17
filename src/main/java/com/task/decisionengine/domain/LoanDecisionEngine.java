@@ -9,7 +9,7 @@ public class LoanDecisionEngine {
     }
 
     public LoanOffer decide(LoanRequest loanInfo) {
-        Loan.validate(loanInfo.amount(), loanInfo.period());
+        LoanValidator.validate(loanInfo.amount(), loanInfo.period());
         return calculator.calculate(loanInfo);
     }
 }
