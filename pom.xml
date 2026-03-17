@@ -27,7 +27,7 @@
         <url/>
     </scm>
     <properties>
-        <java.version>25</java.version>
+        <java.version>21</java.version>
     </properties>
     <dependencies>
         <dependency>
@@ -52,6 +52,7 @@
     </dependencies>
 
     <build>
+        <finalName>loan-decision-engine</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -75,6 +76,7 @@
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
+                    <mainClass>com.task.decisionengine.DecisionEngineApplication</mainClass>
                 </configuration>
             </plugin>
         </plugins>
