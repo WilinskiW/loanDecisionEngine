@@ -95,8 +95,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.querySelector('.form-button').addEventListener('click', (e) => {
         e.preventDefault();
-        if (inputs[2].value.length === 11) {
+        const rawValue = inputs[2].value;
+        const cleanPersonalCode = rawValue.replace(/\s/g, '');
+
+        if (cleanPersonalCode.length === 11) {
+            inputs[2].value = cleanPersonalCode;
             makeRequest();
+        } else {
+            alert(`Incorrect Personal Code! You write ${cleanPersonalCode.length} number, but 11 are needed.`);
         }
     });
 
