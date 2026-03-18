@@ -1,8 +1,13 @@
-# Loan Decision Engine 💵
+# Loan Decision Engine 💵 (with live demo)
 
 ## 🚀 Project Overview
 
 This project is a functional prototype of a Loan Decision Engine designed for a seamless banking experience. The system evaluates loan applications based on a user's personal code, requested amount, and period, automatically optimizing the offer to provide the maximum possible credit limit.The solution consists of a Spring Boot backend and a Vanilla JavaScript frontend, designed with a focus on brand consistency and high performance.
+
+## 🔴 Live demo
+
+> [!IMPORTANT]
+> Live demo: [Loan Decision Engine](http://ec2-3-79-9-179.eu-central-1.compute.amazonaws.com/)
 
 ## 🏗️ Architecture & Thought Process
 
