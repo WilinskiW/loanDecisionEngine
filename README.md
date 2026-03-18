@@ -40,7 +40,7 @@ The API will be available at `http://localhost:8080`.
 Simply open `frontend/index.html` in your browser
 
 ## ✅ Verified Personal codes in Repository:
-- `49002010965` – Debt (Rejection) 
-- `49002010976` – Segment 1 (Modifier: 100) 
-- `49002010987` – Segment 2 (Modifier: 300) 
-- `49002010998` – Segment 3 (Modifier: 1000)
+- 49002010965– Debt (Rejection) 
+- 49002010976– Segment 1 (Modifier: 100) 
+- 49002010987– Segment 2 (Modifier: 300) 
+- 49002010998– Segment 3 (Modifier: 1000)
