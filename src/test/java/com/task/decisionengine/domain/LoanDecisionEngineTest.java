@@ -31,7 +31,7 @@ class LoanDecisionEngineTest {
             LoanRequest request = buildLoanRequest("49002010965", "30", 12);
             //when & then
             assertThatThrownBy(() -> engine.decide(request))
-                    .isInstanceOf(LoanValidationException.class)
+                    .isInstanceOf(InvalidLoanException.class)
                     .hasMessage("Loan amount must be between 2000 and 10000");
         }
 
@@ -42,7 +42,7 @@ class LoanDecisionEngineTest {
             LoanRequest request = buildLoanRequest("49002010965", "10001", 30);
             //when & then
             assertThatThrownBy(() -> engine.decide(request))
-                    .isInstanceOf(LoanValidationException.class)
+                    .isInstanceOf(InvalidLoanException.class)
                     .hasMessage("Loan amount must be between 2000 and 10000");
         }
 
@@ -53,7 +53,7 @@ class LoanDecisionEngineTest {
             LoanRequest request = buildLoanRequest("49002010965", "2500", 11);
             //when & then
             assertThatThrownBy(() -> engine.decide(request))
-                    .isInstanceOf(LoanValidationException.class)
+                    .isInstanceOf(InvalidLoanException.class)
                     .hasMessage("Loan period must be between 12 and 60");
         }
 
@@ -64,7 +64,7 @@ class LoanDecisionEngineTest {
             LoanRequest request = buildLoanRequest("49002010965", "2500", 61);
             //when & then
             assertThatThrownBy(() -> engine.decide(request))
-                    .isInstanceOf(LoanValidationException.class)
+                    .isInstanceOf(InvalidLoanException.class)
                     .hasMessage("Loan period must be between 12 and 60");
         }
 

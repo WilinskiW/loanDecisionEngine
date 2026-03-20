@@ -1,6 +1,6 @@
 package com.task.decisionengine.infrastructure.error;
 
-import com.task.decisionengine.domain.LoanValidationException;
+import com.task.decisionengine.domain.InvalidLoanException;
 import com.task.decisionengine.infrastructure.dto.ValidationErrorResponseDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,8 +22,8 @@ public class GlobalExceptionHandler {
                 .body(new ValidationErrorResponseDto(HttpStatus.BAD_REQUEST.value(), message));
     }
 
-    @ExceptionHandler(LoanValidationException.class)
-    public ResponseEntity<ValidationErrorResponseDto> handleDomainValidationException(LoanValidationException ex) {
+    @ExceptionHandler(InvalidLoanException.class)
+    public ResponseEntity<ValidationErrorResponseDto> handleDomainValidationException(InvalidLoanException ex) {
         return ResponseEntity.badRequest()
                 .body(new ValidationErrorResponseDto(HttpStatus.BAD_REQUEST.value(), ex.getMessage()));
     }
