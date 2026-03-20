@@ -10,20 +10,20 @@ class LoanOfferCalculator {
         this.userCreditRegistry = userCreditRegistry;
     }
 
-    LoanOffer calculate(LoanRequest request) {
-        int modifier = userCreditRegistry.getCreditModifier(request.personalCode());
+    LoanOffer calculate(Loan requestedLoan, String personalCode) {
+        int modifier = userCreditRegistry.getCreditModifier(personalCode);
 
         if (isIneligible(modifier)) {
-            return buildNegativeOutcome(request.period());
+            return buildNegativeOutcome(requestedLoan.getPeriod());
         }
 
-        int maxAmount = calculateMaxAmount(modifier, request.period());
+        int maxAmount = calculateMaxAmount(modifier, requestedLoan.getPeriod());
 
         if (isLoanAffordable(maxAmount)) {
-            return buildPositiveOutcome(maxAmount, request.period());
+            return buildPositiveOutcome(maxAmount, requestedLoan.getPeriod());
         }
 
-        return findAlternativeOffer(modifier, request.period());
+        return findAlternativeOffer(modifier, requestedLoan.getPeriod());
     }
 
     private boolean isIneligible(int modifier){
@@ -35,7 +35,7 @@ class LoanOfferCalculator {
     }
 
     private boolean isLoanAffordable(int maxAmount){
-        return maxAmount >= LoanValidator.MIN_LOAN_AMOUNT.intValue();
+        return maxAmount >= Loan.MIN_AMOUNT.intValue();
     }
 
     private LoanOffer findAlternativeOffer(int modifier, int requestedPeriod){
@@ -49,16 +49,16 @@ class LoanOfferCalculator {
     }
 
     private int calculateRequiredPeriod(int modifier){
-        return LoanValidator.MIN_LOAN_AMOUNT.intValue() / modifier;
+        return Loan.MIN_AMOUNT.intValue() / modifier;
     }
 
     private boolean isPeriodInRange(int period){
-        return period >= LoanValidator.MIN_LOAN_PERIOD && period <= LoanValidator.MAX_LOAN_PERIOD;
+        return period >= Loan.MIN_PERIOD && period <= Loan.MAX_PERIOD;
     }
 
     private LoanOffer calculateFinalOffer(int maxAmount, int period){
-        int finalPeriod = Math.max(period, LoanValidator.MIN_LOAN_PERIOD);
-        int finalAmount = Math.min(calculateMaxAmount(maxAmount, finalPeriod), LoanValidator.MAX_LOAN_AMOUNT.intValue());
+        int finalPeriod = Math.max(period, Loan.MIN_PERIOD);
+        int finalAmount = Math.min(calculateMaxAmount(maxAmount, finalPeriod), Loan.MAX_AMOUNT.intValue());
         return buildPositiveOutcome(finalAmount, finalPeriod);
     }
 }

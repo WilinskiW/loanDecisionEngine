@@ -32,7 +32,7 @@ class LoanDecisionEngineTest {
             //when & then
             assertThatThrownBy(() -> engine.decide(request))
                     .isInstanceOf(InvalidLoanException.class)
-                    .hasMessage("Loan amount must be between 2000 and 10000");
+                    .hasMessage("Loan amount 30 is below minimum 2000");
         }
 
         @Test
@@ -43,7 +43,7 @@ class LoanDecisionEngineTest {
             //when & then
             assertThatThrownBy(() -> engine.decide(request))
                     .isInstanceOf(InvalidLoanException.class)
-                    .hasMessage("Loan amount must be between 2000 and 10000");
+                    .hasMessage("Loan amount 10001 exceeds maximum 10000");
         }
 
         @Test
@@ -54,7 +54,7 @@ class LoanDecisionEngineTest {
             //when & then
             assertThatThrownBy(() -> engine.decide(request))
                     .isInstanceOf(InvalidLoanException.class)
-                    .hasMessage("Loan period must be between 12 and 60");
+                    .hasMessage("Loan period 11 months is below minimum 12");
         }
 
         @Test
@@ -65,7 +65,7 @@ class LoanDecisionEngineTest {
             //when & then
             assertThatThrownBy(() -> engine.decide(request))
                     .isInstanceOf(InvalidLoanException.class)
-                    .hasMessage("Loan period must be between 12 and 60");
+                    .hasMessage("Loan period 61 months exceeds maximum 60");
         }
 
         @Test

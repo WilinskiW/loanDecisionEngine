@@ -1,8 +1,11 @@
 package com.task.decisionengine.domain;
 
+import lombok.Getter;
+
 import java.math.BigDecimal;
 
-class Loan {
+@Getter
+public class Loan {
     private final BigDecimal amount;
     private final int period;
 
@@ -42,5 +45,4 @@ class Loan {
             throw new InvalidLoanException("Loan period %s months exceeds maximum %s".formatted(period, MAX_PERIOD));
         }
     }
-
 }

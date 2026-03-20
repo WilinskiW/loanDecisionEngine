@@ -9,6 +9,8 @@ public class LoanDecisionEngine {
     }
 
     public LoanOffer decide(LoanRequest loanInfo) {
-        return calculator.calculate(loanInfo);
+        var requestedLoan = new Loan(loanInfo.amount(), loanInfo.period());
+        var personalCode = loanInfo.personalCode();
+        return calculator.calculate(requestedLoan, personalCode);
     }
 }
