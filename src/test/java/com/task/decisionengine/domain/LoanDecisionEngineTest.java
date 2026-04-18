@@ -4,6 +4,9 @@ import com.task.decisionengine.infrastructure.registry.InMemoryUserCreditRegistr
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.math.BigDecimal;
 
@@ -24,82 +27,45 @@ class LoanDecisionEngineTest {
 
     @Nested
     class RequestValidation {
-        @Test
-        @DisplayName("Should throw exception when amount is below minimum")
-        public void should_throw_exception_when_amount_is_below_minimum() {
+
+        @ParameterizedTest
+        @ValueSource(strings = {"1999", "10001"})
+        @DisplayName("Should throw exception when amount is out of bounds")
+        public void should_throw_exception_when_amount_is_out_of_bounds(String invalidAmount) {
             //given
-            LoanRequest request = buildLoanRequest("49002010965", "30", 12);
+            LoanRequest request = buildLoanRequest("49002010965", invalidAmount, 30);
+
             //when & then
             assertThatThrownBy(() -> engine.decide(request))
                     .isInstanceOf(LoanValidationException.class)
                     .hasMessage("Loan amount must be between 2000 and 10000");
         }
 
-        @Test
-        @DisplayName("Should throw exception when amount is above maximum")
-        public void should_throw_exception_when_loan_amount_is_above_maximum() {
+        @ParameterizedTest
+        @ValueSource(ints = {11, 61})
+        @DisplayName("Should throw exception when period is out of bounds")
+        public void should_throw_exception_when_period_is_out_of_bounds(int invalidPeriod) {
             //given
-            LoanRequest request = buildLoanRequest("49002010965", "10001", 30);
-            //when & then
-            assertThatThrownBy(() -> engine.decide(request))
-                    .isInstanceOf(LoanValidationException.class)
-                    .hasMessage("Loan amount must be between 2000 and 10000");
-        }
+            LoanRequest request = buildLoanRequest("49002010965", "2500", invalidPeriod);
 
-        @Test
-        @DisplayName("Should throw exception when period is below minimum")
-        public void should_throw_exception_when_loan_period_is_below_minimum() {
-            //given
-            LoanRequest request = buildLoanRequest("49002010965", "2500", 11);
             //when & then
             assertThatThrownBy(() -> engine.decide(request))
                     .isInstanceOf(LoanValidationException.class)
                     .hasMessage("Loan period must be between 12 and 60");
         }
 
-        @Test
-        @DisplayName("Should throw exception when period is above maximum")
-        public void should_throw_exception_when_loan_period_is_above_maximum() {
+        @ParameterizedTest
+        @CsvSource({
+                "2000, 30",
+                "10000, 30",
+                "5000, 12",
+                "5000, 60"
+        })
+        @DisplayName("Should accept valid boundary values")
+        public void should_accept_boundary_values(String amount, int period) {
             //given
-            LoanRequest request = buildLoanRequest("49002010965", "2500", 61);
-            //when & then
-            assertThatThrownBy(() -> engine.decide(request))
-                    .isInstanceOf(LoanValidationException.class)
-                    .hasMessage("Loan period must be between 12 and 60");
-        }
+            LoanRequest request = buildLoanRequest("49002010965", amount, period);
 
-        @Test
-        @DisplayName("Should accept minimum amount")
-        public void should_accept_minimum_amount() {
-            //given
-            LoanRequest request = buildLoanRequest("49002010965", "2000", 30);
-            //when & then
-            assertThatNoException().isThrownBy(() -> engine.decide(request));
-        }
-
-        @Test
-        @DisplayName("Should accept maximum amount")
-        public void should_accept_maximum_amount() {
-            //given
-            LoanRequest request = buildLoanRequest("49002010965", "10000", 30);
-            //when & then
-            assertThatNoException().isThrownBy(() -> engine.decide(request));
-        }
-
-        @Test
-        @DisplayName("Should accept minimum period")
-        public void should_accept_minimum_period() {
-            //given
-            LoanRequest request = buildLoanRequest("49002010965", "10000", 12);
-            //when & then
-            assertThatNoException().isThrownBy(() -> engine.decide(request));
-        }
-
-        @Test
-        @DisplayName("Should accept maximum period")
-        public void should_accept_maximum_period() {
-            //given
-            LoanRequest request = buildLoanRequest("49002010965", "10000", 60);
             //when & then
             assertThatNoException().isThrownBy(() -> engine.decide(request));
         }
